@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <style>img{ height: 100px; float: left; }</style>
+  <script src="http://code.jquery.com/jquery-latest.js"></script>
+  <style>
+  *{
+	margin: 0px;
+  }
+  body{
+	font: 20px cursive;
+	margin: 0px;
+  }
+  #header{
+  margin: 0px;
+	background-color: #9AE4E8;
+	border-bottom: solid 2px black;
+  }
+  p{
+	background-color: #9AE4E8;
+	padding: 2px;
+	margin: 10px auto;
+	border: solid 1px black;
+	width: 50%;
+  }
+  #tweets{
+	text-align: center;
+  }
+  input{
+	
+    border: 5px solid #9AE4E8;
+    border-radius: 5px 5px 5px 5px;
+    font: 20px cursive;
+	margin: auto;
+  }
+  input[type="text"]{
+	text-align: right;
+	width: 50%; 
+	
+  }
+  input[type="submit"]{
+	background-color: #4DB8FF;
+  }
+  #inputPanel{
+	margin: 50px auto;
+	text-align: center;
+  }
+  </style>
+</head>
+<body>
+<div id="header">
+<h1 align="center">TweeteReads</h1>
+<h4 align="center">Designed & Coded by <a href="http://twitter.com/theshubhanshu">@TheShubhanshu</a></h4>
+</div>
+<div id="inputPanel">
+<input type="text" name="screen_name" />
+<input type="submit" value="Retrieve Tweets" onclick="javascript: getTweets();" />
+</div>
+
+<div id="tweets">
+
+</div>
+
+<script>
+function getTweets(){
+$("#tweets").html("<h1>Loading ...</h1>");
+var screen_name = document.getElementsByName("screen_name")[0].value;
+$.getJSON("https://api.twitter.com/1/statuses/user_timeline.json?screen_name="+screen_name+"&count=10&callback=?",
+  function(data) {
+	$("#tweets").html("");
+    $.each(data, function(i,item){
+      $("<p />").html(item.text).appendTo("#tweets");
+      if ( i == 10 ) return false;
+    });
+  });
+}
+</script>
+
+</body>
+</html>
